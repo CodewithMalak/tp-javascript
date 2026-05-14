@@ -1,22 +1,24 @@
 // Écouter la soumission du formulaire 
-/* À COMPLÉTER */ 
+document.getElementById("form-examen").addEventListener("submit", function(e){
 // Empêcher le rechargement de la page 
-// /* À COMPLÉTER */ 
+e.preventDefault()  ;
 // Construire l'objet examen 
-const examen = { /* À COMPLÉTER */ 
-         /* À COMPLÉTER */
-          /* À COMPLÉTER */ 
-          /* À COMPLÉTER */ 
+const examen = { 
+         nom : document.getElementById("nom").value,
+         duree : document.getElementById("duree").value,
+         description : document.getElementById("description").value,
+         proprietaire : document.getElementById("proprietaire").value,
          questions: []
  };
  // Construire la clé de stockage basée sur le propriétaire 
- // /* À COMPLÉTER */ 
+ const key = "examens_" + examen.proprietaire;
 
  // Lire les examens existants (ou tableau vide si rien) 
- /* À COMPLÉTER */ 
+ let exams = JSON.parse(localStorage.getItem(key)) || [] ;
 
  // Ajouter le nouvel examen et sauvegarder 
- /* À COMPLÉTER */
-  /* À COMPLÉTER */ 
+ exams.push(examen) ;
+ localStorage.setItem(key.JSON.stringify(exams));
  alert('Examen ajouté avec succès !'); 
  this.reset();
+});
