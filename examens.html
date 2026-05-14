@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des examens</title>
+</head>
+<body>
+
+    <h1>Examens enregistrés</h1>
+
+    <input type="text" id="proprietaire" placeholder="Nom du propriétaire">
+
+    <button id="afficher">Afficher</button>
+
+    <div id="resultat"></div>
+
+    <script>
+
+        document.getElementById('afficher').addEventListener('click', () => {
+
+            // Lire le nom du propriétaire
+            const proprietaire =
+                document.getElementById('proprietaire').value;
+
+            // Récupérer les examens depuis le localStorage
+            const examens =
+                JSON.parse(localStorage.getItem('examens')) || [];
+
+            // Filtrer les examens du propriétaire
+            const exams = examens.filter(
+                exam => exam.proprietaire === proprietaire
+            );
+
+            // Vider l'affichage précédent
+            const resultat = document.getElementById('resultat');
+            resultat.innerHTML = '';
+
+            // Cas où aucun examen n'est trouvé
+            if (exams.length === 0) {
+
+                resultat.innerHTML = '<p>Aucun examen trouvé.</p>';
+                return;
+
+            }
+
+            // Afficher chaque examen et ses questions
+            exams.forEach((exam, i) => {
+
+                const titre = document.createElement('h2');
+                titre.textContent = `Examen ${i + 1} : ${exam.nom}`;
+
+                resultat.appendChild(titre);
+
+                // Afficher les questions de l'examen
+                const ul = document.createElement('ul');
+
+                exam.questions.forEach(q => {
+
+                    const li = document.createElement('li');
+
+                    li.textContent =
+                        `${q.question} - ${q.points} points`;
+
+                    ul.appendChild(li);
+
+                });
+
+                resultat.appendChild(ul);
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
