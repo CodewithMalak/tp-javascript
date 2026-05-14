@@ -16,62 +16,73 @@
 
     <script>
 
-        document.getElementById('afficher').addEventListener('click', () => {
+    document.getElementById('afficher').addEventListener('click', () => {
 
-            // Lire le nom du propriétaire
-            const proprietaire =
-                document.getElementById('proprietaire').value;
+        // Lire le nom du propriétaire
+        const proprietaire =
+            document.getElementById('proprietaire')
+            .value
+            .trim()
+            .toLowerCase();
 
-            // Récupérer les examens depuis le localStorage
-            const examens =
-                JSON.parse(localStorage.getItem('examens')) || [];
+        // Construire la clé localStorage
+        const key = 'examens_' + proprietaire;
 
-            // Filtrer les examens du propriétaire
-            const exams = examens.filter(
-                exam => exam.proprietaire === proprietaire
-            );
+        // Récupérer les examens
+        const exams =
+            JSON.parse(localStorage.getItem(key)) || [];
 
-            // Vider l'affichage précédent
-            const resultat = document.getElementById('resultat');
-            resultat.innerHTML = '';
+        // Zone résultat
+        const resultat =
+            document.getElementById('resultat');
 
-            // Cas où aucun examen n'est trouvé
-            if (exams.length === 0) {
+        // Vider ancien affichage
+        resultat.innerHTML = '';
 
-                resultat.innerHTML = '<p>Aucun examen trouvé.</p>';
-                return;
+        // Aucun examen
+        if (exams.length === 0) {
 
-            }
+            resultat.innerHTML =
+                '<p>Aucun examen trouvé.</p>';
 
-            // Afficher chaque examen et ses questions
-            exams.forEach((exam, i) => {
+            return;
 
-                const titre = document.createElement('h2');
-                titre.textContent = `Examen ${i + 1} : ${exam.nom}`;
+        }
 
-                resultat.appendChild(titre);
+        // Afficher les examens
+        exams.forEach((exam, i) => {
 
-                // Afficher les questions de l'examen
-                const ul = document.createElement('ul');
+            const titre =
+                document.createElement('h2');
 
-                exam.questions.forEach(q => {
+            titre.textContent =
+                `Examen ${i + 1} : ${exam.nom}`;
 
-                    const li = document.createElement('li');
+            resultat.appendChild(titre);
 
-                    li.textContent =
-                        `${q.question} - ${q.points} points`;
+            // Liste questions
+            const ul =
+                document.createElement('ul');
 
-                    ul.appendChild(li);
+            exam.questions.forEach(q => {
 
-                });
+                const li =
+                    document.createElement('li');
 
-                resultat.appendChild(ul);
+                li.textContent =
+                    `${q.question} - ${q.points} points`;
+
+                ul.appendChild(li);
 
             });
 
+            resultat.appendChild(ul);
+
         });
 
-    </script>
+    });
+
+</script>
 
 </body>
 </html>

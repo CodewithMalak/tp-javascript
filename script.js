@@ -14,11 +14,11 @@ const examen = {
  const key = "examens_" + examen.proprietaire;
 
  // Lire les examens existants (ou tableau vide si rien) 
- let exams = JSON.parse(localStorage.getItem(key)) || [] ;
+ let examens = JSON.parse(localStorage.getItem(key)) || [] ;
 
  // Ajouter le nouvel examen et sauvegarder 
- exams.push(examen) ;
- localStorage.setItem(key.JSON.stringify(exams));
- alert('Examen ajouté avec succès !'); 
- this.reset();
+ examens.push(examen) ;
+localStorage.setItem(key, JSON.stringify(examens));
+alert('Examen ajouté avec succès !'); 
+this.reset();
 });
